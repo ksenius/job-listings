@@ -1,3 +1,5 @@
+include ./components/layout/layout
+
 doctype html
 html(lang="en")
   head
@@ -7,5 +9,6 @@ html(lang="en")
     link(rel="icon", type="image/png", sizes="32x32" href="./images/favicon-32x32.png")
     link(rel="stylesheet", href=site.font)
   body
-    block content
+    +layout
+      block content
     script(src="./js/main.js")
