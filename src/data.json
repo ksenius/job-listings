@@ -49,7 +49,7 @@
         "role": "Frontend",
         "level": "Junior",
         "languages": ["JavaScript"],
-        "tools": ["React", "Saas"]
+        "tools": ["React", "Sass"]
       }
     },
     {
@@ -81,7 +81,7 @@
         "role": "Fullstack",
         "level": "Midweight",
         "languages": ["JavaScript", "Ruby"],
-        "tools": ["Saas"]
+        "tools": ["Sass"]
       }
     },
     {
@@ -113,7 +113,7 @@
         "role": "Frontend",
         "level": "Junior",
         "languages": ["HTML", "JavaScript"],
-        "tools": ["Saas"]
+        "tools": ["Sass"]
       }
     },
     {
@@ -129,7 +129,7 @@
         "role": "Frontend",
         "level": "Junior",
         "languages": ["JavaScript"],
-        "tools": ["Vue", "Saas"]
+        "tools": ["Vue", "Sass"]
       }
     },
     {
@@ -161,7 +161,7 @@
         "role": "Frontend",
         "level": "Junior",
         "languages": ["JavaScript"],
-        "tools": ["React", "Saas"]
+        "tools": ["React", "Sass"]
       }
     }
   ]
