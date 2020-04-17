@@ -16,3 +16,8 @@
     @content;
   }
 }
+
+// Box shadow
+@mixin shadow {
+  box-shadow: 0 1.5rem 2rem -0.5rem rgba($dark-cyan, 0.25);
+}
