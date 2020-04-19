@@ -98,13 +98,13 @@ class Filter {
     target.remove();
 
     this.elements.forEach((element) => {
-      let elementAllTags = this._getAllElementTags(element);
-      let filterTags = [...this.tags];
+      let elementTags = this._getAllElementTags(element);
+      let filterTags = Array.from(this.tags);
 
       const isHidden = element.classList.contains(hiddenElementClass);
 
       const hasFilterTags = filterTags.every(
-        (tag) => elementAllTags.indexOf(tag) !== -1
+        (tag) => elementTags.indexOf(tag) !== -1
       );
 
       if (hasFilterTags && isHidden) {

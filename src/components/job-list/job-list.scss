@@ -2,6 +2,8 @@
 @import '../../scss/helpers/mixins';
 
 .job-list {
+  display: block;
+
   &__container {
     position: relative;
   }
@@ -19,11 +21,11 @@
     margin: 3rem 0 7rem;
 
     @include screen-sm {
-      margin: 7.5rem 0 11.9rem;
+      margin: 7.6rem 0 12rem;
     }
   }
 
   &__card {
-    margin-bottom: 2.2rem;
+    margin-bottom: 2.4rem;
   }
 }
