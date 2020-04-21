@@ -4,12 +4,9 @@
 .job-list {
   display: block;
 
-  &__container {
-    position: relative;
-  }
-
   &__filter {
-    transform: translateY(-3.6rem);
+    position: relative;
+    top: -3.6rem;
     margin-bottom: -3.6rem;
 
     @include screen-sm {
@@ -27,5 +24,6 @@
 
   &__card {
     margin-bottom: 2.4rem;
+    opacity: 0;
   }
 }
