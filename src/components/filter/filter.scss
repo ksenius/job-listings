@@ -10,8 +10,10 @@
     weight: 700;
   }
   background: #fff;
-  padding: 1.6rem 2.4rem;
+  padding: 1.2rem 2rem;
   border-radius: 0.5rem;
+  min-height: 7.2rem;
+  box-sizing: border-box;
   @include shadow;
 
   @include screen-sm {
@@ -79,6 +81,7 @@
   }
 
   &__hidden-element {
-    display: none;
+    visibility: hidden;
+    position: absolute;
   }
 }
