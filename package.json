@@ -19,5 +19,13 @@
   },
   "dependencies": {
     "animejs": "^3.2.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ksenius/job-listings.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ksenius/job-listings/issues"
+  },
+  "homepage": "https://github.com/ksenius/job-listings#readme"
 }
