@@ -20,24 +20,17 @@ class Filter {
 
     this.elements = elements;
     this.container = container;
+
+    this._getSavedSelectedTags();
   }
 
-  filterElements(tagType, tagValue) {
+  filterElements(tagValue) {
     if (!this.tags.size) {
       this._prependFilter();
     }
 
     this._addTag(tagValue);
-
-    const tagCategory = this._getTagCategory(tagType);
-
-    this.elements.forEach((element) => {
-      const elementCategoryTags = element.dataset[`${tagCategory}`].split(',');
-
-      const hasTag = elementCategoryTags.indexOf(tagValue) !== -1;
-
-      if (!hasTag) this._hideElement(element);
-    });
+    this._toggleElementsVisibility();
   }
 
   _createFilter() {
@@ -69,6 +62,8 @@ class Filter {
     this._removeFilter();
 
     this.elements.forEach((element) => this._showElement(element));
+
+    localStorage.removeItem('filterTags');
   }
 
   _removeFilter() {
@@ -87,7 +82,9 @@ class Filter {
     if (this.tags.has(value)) return;
 
     this.tags.add(value);
+
     this._createTagElement(value);
+    this._saveSelectedTags();
   }
 
   _createTagElement(tagValue) {
@@ -98,25 +95,31 @@ class Filter {
     this.tagsContainer.append(tagElement);
   }
 
-  _getTagCategory(tagType) {
-    const category =
-      tagType === 'language' || tagType === 'tool' ? `${tagType}s` : tagType;
+  _toggleElementsVisibility() {
+    this.elements.forEach((element) => {
+      const hasSelectedTags = this._checkSelectedTags(element);
 
-    return category;
+      if (hasSelectedTags) {
+        this._showElement(element);
+      } else {
+        this._hideElement(element);
+      }
+    });
   }
 
-  _getAllElementTags(element) {
-    const result = [];
+  _checkSelectedTags(element) {
+    const elementTags = this._getElementTags(element);
+    const selectedTags = Array.from(this.tags);
 
-    const elementCategories = element.dataset;
+    const hasSelectedTags = selectedTags.every(
+      (tag) => elementTags.indexOf(tag) !== -1
+    );
 
-    for (let category in elementCategories) {
-      const tags = elementCategories[category].split(',');
+    return hasSelectedTags;
+  }
 
-      result.push(...tags);
-    }
-
-    return result.filter((item) => item !== '');
+  _getElementTags(element) {
+    return element.dataset.filterTags.split(',').filter((item) => item !== '');
   }
 
   _hideElement(element) {
@@ -125,7 +128,7 @@ class Filter {
     if (isHidden) return;
 
     const elementHeight = element.offsetHeight;
-    const elementMargin = getComputedStyle(element).margin;
+    const elementBottomMargin = getComputedStyle(element).marginBottom;
 
     anime({
       targets: element,
@@ -136,7 +139,7 @@ class Filter {
         },
         {
           height: [elementHeight, 0],
-          margin: [elementMargin, 0],
+          marginBottom: [elementBottomMargin, 0],
           duration: 200,
         },
       ],
@@ -155,7 +158,7 @@ class Filter {
     if (!isHidden) return;
 
     const elementHeight = element.offsetHeight;
-    const elementMargin = getComputedStyle(element).margin;
+    const elementBottomMargin = getComputedStyle(element).marginBottom;
 
     anime({
       targets: element,
@@ -163,7 +166,7 @@ class Filter {
         {
           opacity: 0,
           height: [0, elementHeight],
-          margin: [0, elementMargin],
+          marginBottom: [0, elementBottomMargin],
           duration: 200,
         },
         {
@@ -198,23 +201,53 @@ class Filter {
     const target = event.currentTarget;
 
     this.tags.delete(tagValue);
-
-    this.elements.forEach((element) => {
-      let elementTags = this._getAllElementTags(element);
-      let filterTags = Array.from(this.tags);
-
-      const hasFilterTags = filterTags.every(
-        (tag) => elementTags.indexOf(tag) !== -1
-      );
-
-      if (hasFilterTags) this._showElement(element);
-    });
+    this._toggleElementsVisibility();
 
     if (!this.tags.size) {
       this._removeFilter();
+      localStorage.removeItem('filterTags');
+    } else {
+      this._saveSelectedTags();
     }
 
     target.remove();
+  }
+
+  _saveSelectedTags() {
+    const selectedTags = JSON.stringify(Array.from(this.tags));
+
+    try {
+      localStorage.setItem('filterTags', selectedTags);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  _getSavedSelectedTags() {
+    try {
+      const savedTagsString = localStorage.getItem('filterTags');
+
+      if (savedTagsString) {
+        const savedTags = JSON.parse(savedTagsString);
+
+        this.tags = new Set(savedTags);
+
+        savedTags.forEach((tag) => this._createTagElement(tag));
+
+        this._prependFilter();
+
+        this.elements.forEach((element) => {
+          const hasFilterTags = this._checkSelectedTags(element);
+
+          if (!hasFilterTags) {
+            element.classList.add(hiddenElementClass);
+          }
+        });
+      }
+    } catch (error) {
+      console.error(error);
+      localStorage.removeItem('filterTags');
+    }
   }
 }
 

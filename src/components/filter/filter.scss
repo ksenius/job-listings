@@ -37,18 +37,19 @@
     margin: 0.8rem 1.6rem 0.8rem 0;
 
     &::after {
-      content: url('../../images/icon-remove.svg');
-      display: flex;
-      align-items: center;
+      content: '';
       height: 100%;
-      background: $dark-cyan;
-      padding: 0.4rem 0.9rem 0;
+      width: 3.2rem;
+      background-color: $dark-cyan;
+      background-image: url('../../images/icon-remove.svg');
+      background-repeat: no-repeat;
+      background-position: center;
       margin-left: 0.8rem;
       transition: 0.5s ease-in-out;
     }
 
     &:hover::after {
-      background: $very-dark-grayish-cyan;
+      background-color: $very-dark-grayish-cyan;
     }
   }
 

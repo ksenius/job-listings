@@ -21,10 +21,7 @@ mixin job-card(options={})
     } = options
 
   article.job-card(
-    data-role=role,
-    data-level=level,
-    data-languages=`${languages}`
-    data-tools=`${tools}`
+    data-filter-tags=`${role},${level},${languages},${tools}`
     class=mix
   )
     .job-card__content(class=isFeatured ? "job-card__content_featured" : "")
@@ -53,9 +50,9 @@ mixin job-card(options={})
 
       //- Tags
       .job-card__tags
-        span.job-card__tag.js-job-card__tag(data-type="role")= role
-        span.job-card__tag.js-job-card__tag(data-type="level")= level
+        span.job-card__tag.js-job-card__tag= role
+        span.job-card__tag.js-job-card__tag= level
         each tool in tools
-          span.job-card__tag.js-job-card__tag(data-type="tool")= tool
+          span.job-card__tag.js-job-card__tag= tool
         each language in languages
-          span.job-card__tag.js-job-card__tag(data-type="language")= language
+          span.job-card__tag.js-job-card__tag= language

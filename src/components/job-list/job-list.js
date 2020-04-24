@@ -32,8 +32,12 @@ class JobList {
   }
 
   _animateJobCards() {
+    const visibleJobCards = Array.from(this.jobCards).filter((card) => {
+      return !card.classList.contains('filter__hidden-element');
+    });
+
     anime({
-      targets: this.jobCards,
+      targets: visibleJobCards,
       translateY: [50, 0],
       opacity: [0, 1],
       duration: 200,
@@ -52,11 +56,9 @@ class JobList {
 
   _handleTagClick(event) {
     const target = event.currentTarget;
-
-    const tagType = target.dataset.type;
     const tagValue = target.innerHTML;
 
-    this.filter.filterElements(tagType, tagValue);
+    this.filter.filterElements(tagValue);
   }
 }
 
