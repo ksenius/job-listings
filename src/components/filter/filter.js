@@ -1,6 +1,7 @@
 import './filter.scss';
 import anime from 'animejs/lib/anime.es.js';
 
+// helper function
 function createElement(tag, className, text) {
   const element = document.createElement(tag);
 
@@ -10,14 +11,13 @@ function createElement(tag, className, text) {
   return element;
 }
 
-const hiddenElementClass = 'filter__hidden-element';
-
 class Filter {
   constructor(elements, container) {
+    this.HIDDEN_ELEMENT_CLASS = 'filter__hidden-element';
+
     this._createFilter();
 
     this.tags = new Set();
-
     this.elements = elements;
     this.container = container;
 
@@ -119,11 +119,13 @@ class Filter {
   }
 
   _getElementTags(element) {
-    return element.dataset.filterTags.split(',').filter((item) => item !== '');
+    const tags = element.dataset.filterTags.split(',');
+
+    return tags.filter((item) => item !== '');
   }
 
   _hideElement(element) {
-    const isHidden = element.classList.contains(hiddenElementClass);
+    const isHidden = element.classList.contains(this.HIDDEN_ELEMENT_CLASS);
 
     if (isHidden) return;
 
@@ -145,7 +147,7 @@ class Filter {
       ],
       easing: 'easeOutQuad',
       complete: () => {
-        element.classList.add(hiddenElementClass);
+        element.classList.add(this.HIDDEN_ELEMENT_CLASS);
         element.style.height = '';
         element.style.margin = '';
       },
@@ -153,7 +155,7 @@ class Filter {
   }
 
   _showElement(element) {
-    const isHidden = element.classList.contains(hiddenElementClass);
+    const isHidden = element.classList.contains(this.HIDDEN_ELEMENT_CLASS);
 
     if (!isHidden) return;
 
@@ -176,7 +178,7 @@ class Filter {
       ],
       easing: 'easeOutQuad',
       begin: () => {
-        element.classList.remove(hiddenElementClass);
+        element.classList.remove(this.HIDDEN_ELEMENT_CLASS);
       },
       complete: () => {
         element.style.height = '';
@@ -215,19 +217,15 @@ class Filter {
 
   _saveSelectedTags() {
     const selectedTags = JSON.stringify(Array.from(this.tags));
-
-    try {
-      localStorage.setItem('filterTags', selectedTags);
-    } catch (error) {
-      console.error(error);
-    }
+    
+    localStorage.setItem('filterTags', selectedTags);
   }
 
   _getSavedSelectedTags() {
-    try {
-      const savedTagsString = localStorage.getItem('filterTags');
+    const savedTagsString = localStorage.getItem('filterTags');
 
-      if (savedTagsString) {
+    if (savedTagsString) {
+      try {
         const savedTags = JSON.parse(savedTagsString);
 
         this.tags = new Set(savedTags);
@@ -240,13 +238,14 @@ class Filter {
           const hasFilterTags = this._checkSelectedTags(element);
 
           if (!hasFilterTags) {
-            element.classList.add(hiddenElementClass);
+            element.classList.add(this.HIDDEN_ELEMENT_CLASS);
           }
         });
+      } catch (error) {
+        console.error(error);
+
+        localStorage.removeItem('filterTags');
       }
-    } catch (error) {
-      console.error(error);
-      localStorage.removeItem('filterTags');
     }
   }
 }
