@@ -1,15 +1,21 @@
 # Job listings with filtering
 
-Frontend Mentor challenge solution. Component approach with Pug, SCSS and ES6 modules.<br>
-Built using Parcel, animated with [Anime.js](https://animejs.com/).
+My solution to an intermediate level [Frontend Mentor](https://www.frontendmentor.io) challenge.
+
+In this project I implemented the component approach with Pug, SCSS and ES modules.<br>
+Built using Parcel, animated with [Anime.js](https://animejs.com).
 
 Users are able to:
-- filter job listings based on selected categories;
-- see selected categories and filtered listings after refreshing the page.
+- filter job listings based on the categories;
+- see the selected categories and the filtered listings after refreshing the page.
 
-[Live Preview](https://job-listings.now.sh/) · [FEM Solution Page](https://www.frontendmentor.io/solutions/job-listings-w-filtering-pug-scss-vanilla-js-animejs-animations-JdwU8onu0)
+[Live Page](https://job-listings.now.sh)
 
-## Available npm scripts
+## Project Setup
+
+Clone the repository and run `npm install` to install the dependencies.
+
+### Available Scripts
 
 `npm start` - runs the project in the development mode on *localhost:3000*.
 
